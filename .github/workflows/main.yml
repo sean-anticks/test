@@ -9,8 +9,8 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '10.x'
-      - run: yarn install
-      - run: yarn global add retire
+      - run: npm install
+      - run: npm install -g retire
       - run: pwd
       - run: retire ./
 
