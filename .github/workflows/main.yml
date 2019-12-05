@@ -11,4 +11,6 @@ jobs:
           node-version: '10.x'
       - run: yarn install
       - run: yarn global add retire
-      - run: retire
+      - run: pwd
+      - run: retire ./
+
