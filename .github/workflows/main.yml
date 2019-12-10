@@ -1,5 +1,4 @@
 on: push
-name: Test retire
 - name: Clone a remote repo
   env:
     DEPLOY_KEY: ${{ secrets.BACKEND }}
