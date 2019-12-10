@@ -1,11 +1,8 @@
 on: push
 name: Test retire
-jobs:
-  build:
-    name: Test retire
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-      - add_ssh_keys:
-        fingerprints: ${{ secrets.BACKEND }}
+  env:
+    DEPLOY_KEY: ${{ secrets.BACKEND }}
+    GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
+    run: |
+      eval "$(ssh-agent -s)"
+      ssh-add - <<< "${DEPLOY_KEY}
