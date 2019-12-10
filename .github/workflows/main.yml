@@ -1,8 +1,8 @@
 on: push
-name: Test retire
-  env:
-    DEPLOY_KEY: ${{ secrets.BACKEND }}
-    GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
-    run: |
-      eval "$(ssh-agent -s)"
-      ssh-add - <<< "${DEPLOY_KEY}
+name: Clone a remote repo
+env:
+  DEPLOY_KEY: ${{ secrets.BACKEND }}
+  GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
+run: |
+  eval "$(ssh-agent -s)"
+  ssh-add - <<< "${DEPLOY_KEY}"
