@@ -1,5 +1,12 @@
 on: push
 name: Test retire
+- name: Clone a remote repo
+  env:
+    DEPLOY_KEY: ${{ secrets.BACKEND }}
+     GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
+  run: |
+    eval "$(ssh-agent -s)"
+    ssh-add - <<< "${DEPLOY_KEY}"
 jobs:
   build:
     name: Test retire
@@ -7,9 +14,3 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
-      - env:
-        DEPLOY_KEY: ${{ secrets.BACKEND }}
-        GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
-      - run: |
-          eval "$(ssh-agent -s)"
-          ssh-add - <<< "${DEPLOY_KEY}"
