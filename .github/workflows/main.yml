@@ -7,6 +7,9 @@ jobs:
   build:
     name: Test retire
     runs-on: ubuntu-latest
+    run: |
+      eval "$(ssh-agent -s)"
+      ssh-add - <<< "${DEPLOY_KEY}"
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
