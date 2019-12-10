@@ -9,8 +9,6 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '10.x'
-      - run: npm install
-      - run: npm install -g retire
-      - run: pwd
-      - run: retire ./
-
+      - uses: webfactory/ssh-agent@v0.1.1
+          with:
+            ssh-private-key: ${{ secrets.BACKEND }}
