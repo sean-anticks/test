@@ -1,4 +1,3 @@
-on: push
 - name: Clone a remote repo
   env:
     DEPLOY_KEY: ${{ secrets.BACKEND }}
@@ -6,10 +5,3 @@ on: push
   run: |
     eval "$(ssh-agent -s)"
     ssh-add - <<< "${DEPLOY_KEY}"
-jobs:
-  build:
-    name: Test retire
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
