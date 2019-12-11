@@ -1,7 +1,17 @@
-- name: Clone a remote repo
-  env:
-    DEPLOY_KEY: ${{ secrets.BACKEND }}
-    GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
-  run: |
-    eval "$(ssh-agent -s)"
-    ssh-add - <<< "${DEPLOY_KEY}"
+on: push
+name: Test retire
+env:
+  DEPLOY_KEY: ${{ secrets.BACKEND }}
+  GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
+jobs:
+  build:
+    name: Test retire
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v2-beta
+        with:
+          repository: joinpapa/backend
+          ref: refs/heads/master
+          token: ${{ secrets.PAT }}
