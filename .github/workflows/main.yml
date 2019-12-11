@@ -39,10 +39,10 @@ jobs:
           ref: refs/heads/master
           token: ${{ secrets.PAT }}
       - uses: actions/setup-elixir@v1.0.0
-          with:
-            otp-version: 21.3.8.2
-            elixir-version: 1.8.1
-            - name: "Install elixir dependencies"
-              run: mix deps.get
-            - name: "Run the tests"
-              run: mix test
+        with:
+          otp-version: 21.3.8.2
+          elixir-version: 1.8.1
+          - name: "Install elixir dependencies"
+            run: mix deps.get
+          - name: "Run the tests"
+            run: mix test
