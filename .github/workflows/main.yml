@@ -1,12 +1,35 @@
 on: push
 name: Test retire
-env:
-  DEPLOY_KEY: ${{ secrets.BACKEND }}
-  GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
 jobs:
-  build:
+  test:
     name: Test retire
     runs-on: ubuntu-latest
+    services:
+      redis:
+        image: redis
+        ports: ["6379:6379"]
+
+      # db:
+      #   image: postgres:11
+      #   ports: ["5432:5432"]
+      #   options: >-
+      #     --health-cmd pg_isready
+      #     --health-interval 10s
+      #     --health-timeout 5s
+      #     --health-retries 5
+
+      db-postgis:
+        image: mdillon/postgis
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        env:
+          POSTGRES_USER: "postgres"
+          POSTGRES_DB: "papa_pal_test"
+          POSTGRES_PASSWORD: ""
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
@@ -15,3 +38,11 @@ jobs:
           repository: joinpapa/backend
           ref: refs/heads/master
           token: ${{ secrets.PAT }}
+      - uses: actions/setup-elixir@v1.0.0
+          with:
+            otp-version: 21.3.8.2
+            elixir-version: 1.8.1
+            - name: "Install elixir dependencies"
+              run: mix deps.get
+            - name: "Run the tests"
+              run: mix test
